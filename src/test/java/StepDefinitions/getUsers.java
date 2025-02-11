@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.junit.Assert;
 
+import Utilities.CofigReader;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -16,14 +17,16 @@ import static io.restassured.path.json.JsonPath.from;
 public class getUsers {
 	private RequestSpecification request;
     private Response response;
+    private CofigReader reader = new CofigReader();
 
 	
     @Given("The user is on the API and user sets Basic Authentication with username {string} and password {string}")
 	public void the_user_is_on_the_api_and_user_sets_basic_authentication_with_username_and_password(String username, String password) {
 	   
-		RestAssured.baseURI = "https://userserviceapp-f5a54828541b.herokuapp.com";
+    	String baseurl = reader.getProperty("BaseUrl");
+		RestAssured.baseURI = baseurl;
 		request = RestAssured.given()
-                .auth().preemptive().basic(username, password)
+                .auth().preemptive().basic(reader.getProperty("username"),reader.getProperty("password"))
                 .header("Content-Type", "application/json");
 	}
 

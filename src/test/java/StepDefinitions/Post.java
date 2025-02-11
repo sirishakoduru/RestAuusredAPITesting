@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import org.junit.Assert;
 
+import Utilities.CofigReader;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -18,14 +19,17 @@ public class Post {
 //	public static int userId;
 	public static HashMap map = new HashMap();
 	public static HashMap addressMap = new HashMap();
+	private CofigReader reader = new CofigReader();
 	
 	@Given("User set POST for user API Endpoint {string}")
 	public void user_set_post_for_user_api_endpoint(String string) {
 		
-		RestAssured.baseURI = "https://userserviceapp-f5a54828541b.herokuapp.com";
+		String baseurl = reader.getProperty("BaseUrl");
+		RestAssured.baseURI = baseurl;
 		request = RestAssured.given()
-                .auth().preemptive().basic("Numpy@gmail.com", "userapi@2025")
+                .auth().preemptive().basic(reader.getProperty("username"),reader.getProperty("password"))
                 .header("Content-Type", "application/json");
+
 		
 //		map.put("user_id", RestUtils.getUserId());
 //		map.put("addressId", RestUtils.getAddressId());
@@ -65,9 +69,11 @@ public class Post {
 	
 	@Given("User set POST for user Endpoint {string}")
 	public void user_set_post_for_user_endpoint(String string) {
-		RestAssured.baseURI = "https://userserviceapp-f5a54828541b.herokuapp.com";
+		
+		String baseurl = reader.getProperty("BaseUrl");
+		RestAssured.baseURI = baseurl;
 		request = RestAssured.given()
-                .auth().preemptive().basic("Numpy@gmail.com", "userapi@2025")
+                .auth().preemptive().basic(reader.getProperty("username"),reader.getProperty("password"))
                 .header("Content-Type", "application/json");
 		map.put("user_first_name", RestUtils.getUserFirstName());
 		map.put("user_last_name", RestUtils.getUserLastName());
@@ -97,10 +103,11 @@ public class Post {
 
 	@Given("User set POST for user API with invalid Endpoint {string}")
 	public void user_set_post_for_user_api_with_invalid_endpoint(String string) {
-	    
-		RestAssured.baseURI = "https://userserviceapp-f5a54828541b.herokuapp.com";
+		
+		String baseurl = reader.getProperty("BaseUrl");
+		RestAssured.baseURI = baseurl;
 		request = RestAssured.given()
-                .auth().preemptive().basic("Numpy@gmail.com", "userapi@2025")
+                .auth().preemptive().basic(reader.getProperty("username"),reader.getProperty("password"))
                 .header("Content-Type", "application/json");
 		map.put("user_first_name", RestUtils.getUserFirstName());
 		map.put("user_last_name", RestUtils.getUserLastName());
@@ -131,9 +138,10 @@ public class Post {
 	@Given("User set POST with Endpoint {string}")
 	public void user_set_post_with_endpoint(String string) {
 	   
-		RestAssured.baseURI = "https://userserviceapp-f5a54828541b.herokuapp.com";
+		String baseurl = reader.getProperty("BaseUrl");
+		RestAssured.baseURI = baseurl;
 		request = RestAssured.given()
-                .auth().preemptive().basic("Numpy@gmail.com", "userapi@2025")
+                .auth().preemptive().basic(reader.getProperty("username"),reader.getProperty("password"))
                 .header("Content-Type", "application/json");
 		map.clear();
 		addressMap.clear();
@@ -175,9 +183,10 @@ public class Post {
 	@Given("User set POST with Endpoint {string} for firstname AlphaNumeric")
 	public void user_set_post_with_endpoint_for_firstname_alpha_numeric(String string) {
 		
-		RestAssured.baseURI = "https://userserviceapp-f5a54828541b.herokuapp.com";
+		String baseurl = reader.getProperty("BaseUrl");
+		RestAssured.baseURI = baseurl;
 		request = RestAssured.given()
-                .auth().preemptive().basic("Numpy@gmail.com", "userapi@2025")
+                .auth().preemptive().basic(reader.getProperty("username"),reader.getProperty("password"))
                 .header("Content-Type", "application/json");
 		map.clear();
 		addressMap.clear();
@@ -216,9 +225,10 @@ public class Post {
 	@Given("User set POST with Endpoint {string} for firstname Numeric")
 	public void user_set_post_with_endpoint_for_firstname_numeric(String string) {
 	    
-		RestAssured.baseURI = "https://userserviceapp-f5a54828541b.herokuapp.com";
+		String baseurl = reader.getProperty("BaseUrl");
+		RestAssured.baseURI = baseurl;
 		request = RestAssured.given()
-                .auth().preemptive().basic("Numpy@gmail.com", "userapi@2025")
+                .auth().preemptive().basic(reader.getProperty("username"),reader.getProperty("password"))
                 .header("Content-Type", "application/json");
 		map.clear();
 		addressMap.clear();
@@ -255,9 +265,10 @@ public class Post {
 	@Given("User set POST for user API Endpoint {string} for firstname special character")
 	public void user_set_post_for_user_api_endpoint_for_firstname_special_character(String string) {
 	   
-		RestAssured.baseURI = "https://userserviceapp-f5a54828541b.herokuapp.com";
+		String baseurl = reader.getProperty("BaseUrl");
+		RestAssured.baseURI = baseurl;
 		request = RestAssured.given()
-                .auth().preemptive().basic("Numpy@gmail.com", "userapi@2025")
+                .auth().preemptive().basic(reader.getProperty("username"),reader.getProperty("password"))
                 .header("Content-Type", "application/json");
 		map.clear();
 		addressMap.clear();
@@ -286,9 +297,10 @@ public class Post {
 	@Given("User set POST for user API Endpoint {string} for firstname one letter")
 	public void user_set_post_for_user_api_endpoint_for_firstname_one_letter(String string) {
 	    
-		RestAssured.baseURI = "https://userserviceapp-f5a54828541b.herokuapp.com";
+		String baseurl = reader.getProperty("BaseUrl");
+		RestAssured.baseURI = baseurl;
 		request = RestAssured.given()
-                .auth().preemptive().basic("Numpy@gmail.com", "userapi@2025")
+                .auth().preemptive().basic(reader.getProperty("username"),reader.getProperty("password"))
                 .header("Content-Type", "application/json");
 		map.clear();
 		addressMap.clear();
@@ -318,9 +330,10 @@ public class Post {
 	@Given("User set POST for user API Endpoint {string} without lastname")
 	public void user_set_post_for_user_api_endpoint_without_lastname(String string) {
 	    
-		RestAssured.baseURI = "https://userserviceapp-f5a54828541b.herokuapp.com";
+		String baseurl = reader.getProperty("BaseUrl");
+		RestAssured.baseURI = baseurl;
 		request = RestAssured.given()
-                .auth().preemptive().basic("Numpy@gmail.com", "userapi@2025")
+                .auth().preemptive().basic(reader.getProperty("username"),reader.getProperty("password"))
                 .header("Content-Type", "application/json");
 		map.clear();
 		addressMap.clear();
@@ -350,9 +363,10 @@ public class Post {
 	@Given("User set POST with Endpoint {string} for lastname AlphaNumeric")
 	public void user_set_post_with_endpoint_for_lastname_alpha_numeric(String string) {
 	    
-		RestAssured.baseURI = "https://userserviceapp-f5a54828541b.herokuapp.com";
+		String baseurl = reader.getProperty("BaseUrl");
+		RestAssured.baseURI = baseurl;
 		request = RestAssured.given()
-                .auth().preemptive().basic("Numpy@gmail.com", "userapi@2025")
+                .auth().preemptive().basic(reader.getProperty("username"),reader.getProperty("password"))
                 .header("Content-Type", "application/json");
 		map.clear();
 		addressMap.clear();
@@ -381,9 +395,10 @@ public class Post {
 	@Given("User set POST with Endpoint {string} for lastname Numeric")
 	public void user_set_post_with_endpoint_for_lastname_numeric(String string) {
 	    
-		RestAssured.baseURI = "https://userserviceapp-f5a54828541b.herokuapp.com";
+		String baseurl = reader.getProperty("BaseUrl");
+		RestAssured.baseURI = baseurl;
 		request = RestAssured.given()
-                .auth().preemptive().basic("Numpy@gmail.com", "userapi@2025")
+                .auth().preemptive().basic(reader.getProperty("username"),reader.getProperty("password"))
                 .header("Content-Type", "application/json");
 		map.clear();
 		addressMap.clear();
@@ -412,9 +427,10 @@ public class Post {
 	@Given("User set POST with Endpoint {string} for lastname one letter")
 	public void user_set_post_with_endpoint_for_lastname_one_letter(String string) {
 	    
-		RestAssured.baseURI = "https://userserviceapp-f5a54828541b.herokuapp.com";
+		String baseurl = reader.getProperty("BaseUrl");
+		RestAssured.baseURI = baseurl;
 		request = RestAssured.given()
-                .auth().preemptive().basic("Numpy@gmail.com", "userapi@2025")
+                .auth().preemptive().basic(reader.getProperty("username"),reader.getProperty("password"))
                 .header("Content-Type", "application/json");
 		map.clear();
 		addressMap.clear();
@@ -443,9 +459,10 @@ public class Post {
 	@Given("User set POST with Endpoint {string} for lastname with special character")
 	public void user_set_post_with_endpoint_for_lastname_with_special_character(String string) {
 	    
-		RestAssured.baseURI = "https://userserviceapp-f5a54828541b.herokuapp.com";
+		String baseurl = reader.getProperty("BaseUrl");
+		RestAssured.baseURI = baseurl;
 		request = RestAssured.given()
-                .auth().preemptive().basic("Numpy@gmail.com", "userapi@2025")
+                .auth().preemptive().basic(reader.getProperty("username"),reader.getProperty("password"))
                 .header("Content-Type", "application/json");
 		map.clear();
 		addressMap.clear();
@@ -474,9 +491,10 @@ public class Post {
 	@Given("User set POST for user API Endpoint {string} without phone number")
 	public void user_set_post_for_user_api_endpoint_without_phone_number(String string) {
 	   
-		RestAssured.baseURI = "https://userserviceapp-f5a54828541b.herokuapp.com";
+		String baseurl = reader.getProperty("BaseUrl");
+		RestAssured.baseURI = baseurl;
 		request = RestAssured.given()
-                .auth().preemptive().basic("Numpy@gmail.com", "userapi@2025")
+                .auth().preemptive().basic(reader.getProperty("username"),reader.getProperty("password"))
                 .header("Content-Type", "application/json");
 		map.clear();
 		addressMap.clear();
@@ -507,9 +525,10 @@ public class Post {
 	@Given("User set POST for user API Endpoint {string} without email")
 	public void user_set_post_for_user_api_endpoint_without_email(String string) {
 	    
-		RestAssured.baseURI = "https://userserviceapp-f5a54828541b.herokuapp.com";
+		String baseurl = reader.getProperty("BaseUrl");
+		RestAssured.baseURI = baseurl;
 		request = RestAssured.given()
-                .auth().preemptive().basic("Numpy@gmail.com", "userapi@2025")
+                .auth().preemptive().basic(reader.getProperty("username"),reader.getProperty("password"))
                 .header("Content-Type", "application/json");
 		map.clear();
 		addressMap.clear();

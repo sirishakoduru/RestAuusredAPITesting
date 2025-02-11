@@ -2,6 +2,7 @@ package StepDefinitions;
 
 import org.junit.Assert;
 
+import Utilities.CofigReader;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -12,13 +13,15 @@ import io.restassured.specification.RequestSpecification;
 public class DeleteUser {
 	private RequestSpecification request;
     private Response response;
+    private CofigReader reader = new CofigReader();
     
     @Given("User sets the Delete request with a valid endpoint {string}")
     public void user_sets_the_delete_request_with_a_valid_endpoint(String endpoint) {
         
-    	RestAssured.baseURI = "https://userserviceapp-f5a54828541b.herokuapp.com";
+    	String baseurl = reader.getProperty("BaseUrl");
+		RestAssured.baseURI = baseurl;
 		request = RestAssured.given()
-                .auth().preemptive().basic("Numpy@gmail.com", "userapi@2025")
+                .auth().preemptive().basic(reader.getProperty("username"),reader.getProperty("password"))
                 .header("Content-Type", "application/json");
 		
 		response = request.delete(endpoint);

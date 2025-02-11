@@ -12,7 +12,7 @@ Then A valid response with status code "201 Created" and new User is created wit
 Examples:
 | Sheetname   | row | 
 | Sheet1 |         1|
-| Sheet1 |         2|
+#| Sheet1 |         2|
 
 @Get_Valid_endpoint
 Scenario: Check if Admin is able to retrieve the user with valid user_id

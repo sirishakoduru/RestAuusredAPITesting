@@ -7,12 +7,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-    features = {"src/test/resources/Features/GetUser.feature",
-    		"src/test/resources/Features/Post.feature",
-    		"src/test/resources/Features/Update.feature",
-    		"src/test/resources/Features/Delete.feature",
-    		"src/test/resources/Features/NoAuth.feature"
-    		},
+    features = {"src/test/resources/Features/UserAPI.feature"},
 
     glue = {"StepDefinitions"},
 

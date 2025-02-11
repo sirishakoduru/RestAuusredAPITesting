@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import org.junit.Assert;
 
+import Utilities.CofigReader;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -17,6 +18,7 @@ public class UpdateUser {
     private Response response;
     public static HashMap map = new HashMap();
 	public static HashMap addressMap = new HashMap();
+	private CofigReader reader = new CofigReader();
 	
 	String user_first_name = RestUtils.getUserFirstName();
 	String user_last_name = RestUtils.getUserLastName();
@@ -32,9 +34,10 @@ public class UpdateUser {
 	@Given("User set the PUT request with the firstname valid data and valid Endpoint")
 	public void user_set_the_put_request_with_the_firstname_valid_data_and_valid_endpoint() {
 	    
-		RestAssured.baseURI = "https://userserviceapp-f5a54828541b.herokuapp.com";
+		String baseurl = reader.getProperty("BaseUrl");
+		RestAssured.baseURI = baseurl;
 		request = RestAssured.given()
-                .auth().preemptive().basic("Numpy@gmail.com", "userapi@2025")
+                .auth().preemptive().basic(reader.getProperty("username"),reader.getProperty("password"))
                 .header("Content-Type", "application/json");
 		map.clear();
 		addressMap.clear();

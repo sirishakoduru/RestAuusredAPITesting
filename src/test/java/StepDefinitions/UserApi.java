@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import org.junit.Assert;
 
+import Utilities.CofigReader;
 import Utilities.ExcelReader;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -20,17 +21,21 @@ public class UserApi{
 	private static RequestSpecification request;
     private Response response;
 	public static int userId;
+	public String userName;
 	public static HashMap map = new HashMap();
 	public static HashMap addressMap = new HashMap();
-	ExcelReader excelReader = new ExcelReader(excelFilePath);
+	private CofigReader reader = new CofigReader();
+	ExcelReader excelReader = new ExcelReader(reader.getProperty("excelFilePath"));
+	
 
 	
 	@Given("User set POST for user API with post Endpoint {string} and data {string} and {int}")
 	public void user_set_post_for_user_api_with_post_endpoint_and_data_and(String string, String sheetname, Integer row) throws IOException {
 	    
-		RestAssured.baseURI = "https://userserviceapp-f5a54828541b.herokuapp.com";
+		String baseurl = reader.getProperty("BaseUrl");
+		RestAssured.baseURI = baseurl;
 		request = RestAssured.given()
-                .auth().preemptive().basic("Numpy@gmail.com", "userapi@2025")
+                .auth().preemptive().basic(reader.getProperty("username"),reader.getProperty("password"))
                 .header("Content-Type", "application/json");
 
 		String firstname = excelReader.getCellData(sheetname,row,0);
@@ -60,10 +65,11 @@ public class UserApi{
 	@When("User sends Post Request with valid End Point and valid data from excel.")
 	public void user_sends_post_request_with_valid_end_point_and_valid_data_from_excel() {
 	    
-		response = request.body(map).post("/uap/createusers");
+		response = request.body(map).post(reader.getProperty("Post"));
 		System.out.println(response.body().asPrettyString());
 		JsonPath jsonPath = response.jsonPath();
 		userId = jsonPath.getInt("user_id");
+		userName = jsonPath.getString("user_first_name");
 		System.out.println("UserID from response: " +userId);
 		System.out.println(response.asPrettyString());
 	}
@@ -79,9 +85,9 @@ public class UserApi{
 	@Given("User sets the GET request with valid endpoint {string} with user_id from post")
 	public void user_sets_the_get_request_with_valid_endpoint_with_user_id_from_post(String string) {
 	    
-		RestAssured.baseURI = "https://userserviceapp-f5a54828541b.herokuapp.com";
+		RestAssured.baseURI = reader.getProperty("BaseUrl");
 		request = RestAssured.given()
-                .auth().preemptive().basic("Numpy@gmail.com", "userapi@2025")
+                .auth().preemptive().basic(reader.getProperty("username"),reader.getProperty("password"))
                 .header("Content-Type", "application/json");
 //		request = request.when().log().all();
 	}
@@ -89,7 +95,8 @@ public class UserApi{
 	@When("User sends GET request with endpoint and userid created from post")
 	public void user_sends_get_request_with_endpoint_and_userid_created_from_post() {
 	   
-		response = request.get("uap/user/" +userId);
+		System.out.println("User ID In get user ID request: " + userId);
+		response = request.get(reader.getProperty("GetUserbyuserId")+userId);
 //		JsonPath jsonPath = response.jsonPath();
 //		userId = jsonPath.getInt("user_id");
 		System.out.println(response.asPrettyString());
@@ -106,9 +113,9 @@ public class UserApi{
 	@Given("User set the PUT request with the firstname and valid Endpoint.")
 	public void user_set_the_put_request_with_the_firstname_and_valid_endpoint() {
 	
-		RestAssured.baseURI = "https://userserviceapp-f5a54828541b.herokuapp.com";
+		RestAssured.baseURI = reader.getProperty("BaseUrl");
 		request = RestAssured.given()
-                .auth().preemptive().basic("Numpy@gmail.com", "userapi@2025")
+                .auth().preemptive().basic(reader.getProperty("username"),reader.getProperty("password"))
                 .header("Content-Type", "application/json");
 	}
 
@@ -116,7 +123,7 @@ public class UserApi{
 	public void user_sends_https_request_with_endpoint(String string) {
 	    
 		map.put("user_first_name","sirisat");
-		response = request.body(map).put("/uap/updateuser/" +userId);
+		response = request.body(map).put(reader.getProperty("put") + userId);
 		System.out.println(response.asPrettyString());
 		System.out.println(response.getBody().asPrettyString());
 	}
@@ -132,17 +139,17 @@ public class UserApi{
 	@Given("User sets the Delete request with a valid endpoint {string} from post")
 	public void user_sets_the_delete_request_with_a_valid_endpoint_from_post(String string) {
 	    
-		RestAssured.baseURI = "https://userserviceapp-f5a54828541b.herokuapp.com";
+		RestAssured.baseURI = reader.getProperty("BaseUrl");
 		request = RestAssured.given()
-                .auth().preemptive().basic("Numpy@gmail.com", "userapi@2025")
+                .auth().preemptive().basic(reader.getProperty("username"),reader.getProperty("password"))
                 .header("Content-Type", "application/json");
 	}
 
 	@When("User send an HTTP Delete request with user_id from post")
 	public void user_send_an_http_delete_request_with_user_id_from_post() {
 	    
-		response = request.delete("uap/deleteuser/" +userId);
-		System.out.println("delected userId :" +userId);
+		response = request.delete(reader.getProperty("DeletebyUserid") + userId);
+		System.out.println("delected userId :" + userId);
 		
 	}
 

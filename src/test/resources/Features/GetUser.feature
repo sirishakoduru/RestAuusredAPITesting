@@ -23,7 +23,7 @@ When User sends get Request with valid endpoint "<endpoint>"
 Then User receives status code 200 OK.
 Examples:
 |endpoint|  
-|uap/user/20402 |    
+|uap/user/20402 |    	
 |uap/users/username/dheek |  
 
 @Get_Invalid_UserID_UserName
